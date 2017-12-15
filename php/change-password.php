@@ -20,7 +20,10 @@
           <a class="nav-link" href="#">Passwort Selfservice <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="contact.php">Kontakt</a>
+          <a class="nav-link" href="contact.html">Kontakt</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="test.php">Test</a>
         </li>
       </ul>
     </div>

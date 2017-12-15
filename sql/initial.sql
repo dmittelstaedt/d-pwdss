@@ -14,6 +14,7 @@ create table if not exists user (
 );
 
 # Insert some users in table users
-delete from user where username="david";
 insert into user (firstname, lastname, username, password)
   values ("David", "Test", "david", "$apr1$wD3re7A/$QjMeU6boYvoLS2hBZVoLg1");
+insert into user (firstname, lastname, username, password)
+  values ("Darth", "Vader", "vaderda", "password");
