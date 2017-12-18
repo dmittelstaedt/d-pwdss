@@ -21,13 +21,13 @@ function selectUser() {
   {
     // $mMessage = "Connection failed: " . $e->getMessage();
     $mMessage = '<div class="col-sm-12">
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <strong>Holy guacamole!</strong> You should check in on some of those fields below.
-        </div>
-      </div>';
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+    </button>
+    <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+    </div>
+    </div>';
   }
 }
 
@@ -39,6 +39,7 @@ if (isset($_POST["connect"])) {
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
@@ -71,15 +72,21 @@ if (isset($_POST["connect"])) {
   </nav>
 
   <div class="container" style="margin-top: 1em; margin-left: 6.8em">
-    <div class="col-sm-6">
-      <form method="post">
-        <button type="submit" name="connect" class="btn btn-default" onclick="testjs()">User anzeigen</button>
-      </form>
-    </div>
-  </form>
-  <?php echo "<p class='text-danger'>$mMessage</p>";?>
-</div>
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
+    <form method="post">
+      <div class="form-group col-sm-6">
+        <input type="text" class="form-control" id="username" placeholder="Benutzername">
+      </div>
+      <div class="form-group col-sm-6">
+        <input type="password" class="form-control" id="current_password" placeholder="aktuelles Passwort">
+      </div>
+      <div class="col-sm-6">
+        <button type="submit" name="connect" class="btn btn-default">User anzeigen</button>
+      </div>
+    </form>
+    <?php echo "<p class='text-danger'>$mMessage</p>";?>
+  </div>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/tether.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
 </body>
 </html>
