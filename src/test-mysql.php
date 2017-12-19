@@ -1,38 +1,81 @@
 <?php
-$servername = "localhost";
-$username = "";
-$password = "david";
-$dbname = "pwssdb";
+$dbServer = "localhost";
+$dbUsername = "root";
+$dbPassword = "david";
+$dbName = "pwssdb";
 $mMessage = "";
 
-function selectUser() {
-  global $mMessage, $servername, $username, $password, $dbname;
+function console_log( $data ){
+  echo '<script>';
+  echo 'console.log('. json_encode( $data ) .')';
+  echo '</script>';
+}
+
+function selectUserAndPasswort($username, $password) {
+  global $mMessage, $dbServer, $dbUsername, $dbPassword, $dbName;
   try {
-    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $conn = new PDO("mysql:host=$dbServer;dbname=$dbName", $dbUsername, $dbPassword);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $statement = $conn->prepare("select * from user");
+    $statement = $conn->prepare("select * from user where username='$username' and password='$password'");
+    // $statement = $conn->prepare("select * from user where username='$username'");
     $statement->execute();
-    while ($row = $statement->fetch()) {
-      $mMessage = $mMessage . $row['firstname'] . " " . $row['lastname'] . "<br>";
-    }
-    // $mMessage = $statement->rowCount();
+    // while ($row = $statement->fetch()) {
+    //   $mMessage = $mMessage . $row['firstname'] . " " . $row['lastname'] . "<br>";
+    // }
+    $result = $statement->fetchAll();
+    console_log($result);
+    // $mMessage = count($result);
+    return $statement->rowCount();
   }
   catch(PDOException $e)
   {
+    return -99;
     // $mMessage = "Connection failed: " . $e->getMessage();
-    $mMessage = '<div class="col-sm-12">
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-    </button>
-    <strong>Holy guacamole!</strong> You should check in on some of those fields below.
-    </div>
-    </div>';
+    // $mMessage = '<div class="col-sm-12">
+    // <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    // <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    // <span aria-hidden="true">&times;</span>
+    // </button>
+    // <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+    // </div>
+    // </div>';
   }
 }
 
+function readValues() {
+  global $mMessage;
+  $mMessage = $_POST["username"] . " " . $_POST["current_password"];
+}
+
+function checkCredentials() {
+  global $mMessage;
+  $username = $_POST["username"];
+  $password = $_POST["current_password"];
+  $clearPassword = "046c56f38f0930c852d273bb5e5963f6";
+  $mystring = $username . ":test:" . $password;
+  console_log($mystring);
+  $hashedPassword = md5($username . ":test:" . $password);
+  console_log($hashedPassword);
+  console_log($clearPassword);
+  // $clearPassword = str_replace(' ', '', $clearPassword);
+  // console_log($hashedPassword);
+  // var_dump($hashedPassword);
+  // var_dump($clearPassword);
+  // if ($hashedPassword == $clearPassword) {
+  //   console_log("true");
+  // } else {
+  //   console_log("false");
+  // }
+  // console_log($username . " " . $hashedPassword);
+  $mMessage = selectUserAndPasswort($username, $hashedPassword);
+  // $mMessage = $hashedPassword;
+
+}
+
 if (isset($_POST["connect"])) {
-  selectUser();
+  // selectUser();
+  // readValues();
+  checkCredentials();
 }
 ?>
 
@@ -72,18 +115,18 @@ if (isset($_POST["connect"])) {
   </nav>
 
   <div class="container" style="margin-top: 1em; margin-left: 6.8em">
+    <?php echo "<p class='text-danger'>$mMessage</p>";?>
     <form method="post">
       <div class="form-group col-sm-6">
-        <input type="text" class="form-control" id="username" placeholder="Benutzername">
+        <input type="text" class="form-control" name="username" id="username" placeholder="Benutzername">
       </div>
       <div class="form-group col-sm-6">
-        <input type="password" class="form-control" id="current_password" placeholder="aktuelles Passwort">
+        <input type="password" class="form-control" name="current_password" id="current_password" placeholder="aktuelles Passwort">
       </div>
       <div class="col-sm-6">
         <button type="submit" name="connect" class="btn btn-default">User anzeigen</button>
       </div>
     </form>
-    <?php echo "<p class='text-danger'>$mMessage</p>";?>
   </div>
   <script src="js/jquery.min.js"></script>
   <script src="js/tether.min.js"></script>
