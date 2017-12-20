@@ -1,7 +1,9 @@
-Password Self-Service
+Password Selfservice
 ==============
 
-Will become a sub heading
+A password selfservice based on PHP, MySQL and Bootstrap.
+
+Features
 --------------
 
 *This will be Italic*

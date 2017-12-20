@@ -1,3 +1,7 @@
+<?php
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,10 +37,8 @@
     </div>
   </nav>
 
-  <div class="container" style="margin-top: 1em; margin-left: 6.8em">
-    <div class="container" style="margin-bottom: 1em;">
-      <h2 style="color:#AD1E14;">Passwort Selfservice</h2>
-    </div>
+  <div class="container" style="margin-top: 1em;">
+      <h3 style="color:#AD1E14; margin-bottom: 0.7em;">Passwort Selfservice</h3>
     <form>
       <div class="form-group col-sm-6">
         <input type="text" class="form-control" id="username" placeholder="Benutzername">
@@ -54,8 +56,8 @@
       <label><input type="checkbox"> Remember me</label>
     </div> -->
     <div class="col-sm-6">
-      <button type="submit" class="btn btn-default">&Auml;ndern</button>
-      <button type="reset" class="btn btn-default">L&ouml;schen</button>
+      <button type="submit" class="btn btn-outline-danger" style="border-color:#AD1E14; color:#AD1E14">&Auml;ndern</button>
+      <button type="reset" class="btn btn-outline-danger">L&ouml;schen</button>
     </div>
   </form>
 </div>
