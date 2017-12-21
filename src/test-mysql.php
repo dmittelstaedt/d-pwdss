@@ -87,9 +87,10 @@ function checkPasswordRules() {
       // while ($row = $statement->fetch()) {
       //   $mMessage = $mMessage . $row['firstname'] . " " . $row['lastname'] . "<br>";
       // }
-      $result = $statement->fetchAll();
-      console_log($result);
+      // $result = $statement->fetchAll();
+      // console_log($result);
       // $mMessage = count($result);
+      // logConsole("updatePassword" . $statement->rowCount());
       return $statement->rowCount();
     }
     catch(PDOException $e)
