@@ -12,7 +12,7 @@ $errorMessageFields = "Es sind nicht alle Felder ausgef&uuml;llt.";
 $errorMessagePasswords = "Passw&ouml;rter sind nicht identisch.";
 $errorMessagePasswordRule = "Passwortrichtlinien sind nicht erf&uuml;llt.";
 $errorMessageUsername = "Benutzername oder Passwort ist falsch.";
-$errorMessageOther = "Es ist ein unerwarteter Fehler aufgetreten. Wenden Sie sich an Ihren Administrator.";
+$errorMessageOther = "Es ist ein unerwarteter Fehler aufgetreten. Wenden Sie sich bitte an Ihren Administrator.";
 
 $errorMessageElemenet = "";
 
@@ -24,7 +24,7 @@ if (isset($_POST["change-password"])) {
 * Main function of this site. Handles the logic for changing the password.
 */
 function changePassword() {
-  global $errorMessageFields, $errorMessageElemenet;
+  global $errorMessageFields, $errorMessagePasswords, $errorMessagePasswordRule, $errorMessageUsername, $errorMessageOther, $errorMessageElemenet;
 
   $errorMessage = "";
 
@@ -37,22 +37,31 @@ function changePassword() {
   if (checkRequiredFields($username,$currentPassword,$newPassword,$newPasswordRe)) {
     if (comparePasswords($newPassword,$newPasswordRe)) {
       if (checkPasswordRules($newPassword)) {
-        if (updatePassword($username,$currentPassword,$newPassword)) {
-            // redirectToSuccess();
+        $rcUpdatePassword = updatePassword($username,$currentPassword,$newPassword);
+        switch ($rcUpdatePassword) {
+          case '0':
+            $errorMessage = $errorMessageUsername;
+            break;
+          case '1':
+            redirectToSuccess();
+            break;
+
+          default:
+            $errorMessage = $errorMessageOther;
+            break;
         }
       } else {
-        # code...
+        $errorMessage = $errorMessagePasswordRule;
       }
 
     } else {
-      # code...
+      $errorMessage = $errorMessagePasswords;
     }
 
   } else {
     $errorMessage = $errorMessageFields;
   }
-  $errorMessageElemenet = "<div class=\"alert alert-danger col-sm-6\" role=\"alert\">$errorMessage</div>";
-  return false;
+  $errorMessageElemenet = "<div class=\"alert alert-danger col-md-8\" name=\"php-alert\" id=\"php-alert\" role=\"alert\">$errorMessage</div>";
 }
 
 /**
@@ -132,7 +141,7 @@ function updatePassword($username, $currentPassword, $newPassword) {
 *
 */
 function redirectToSuccess() {
-  header("Location: success.html");
+  header("Location: successful-change.html");
   die();
 }
 
@@ -164,47 +173,43 @@ function logConsole( $data ) {
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="index.html">
       <img src="res/dataport-neg.png" width="100" height="auto" alt="Dataport A&ouml;R">
     </a>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="change-password.php">Passwort ändern <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="change-password.php">Passwort &auml;ndern <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="contact.html">Kontakt</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="test-mysql.php">MySQL</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="test-js.html">JS</a>
         </li>
       </ul>
     </div>
   </nav>
 
-  <div class="container" style="margin-top: 1em;">
+  <div class="container col-md-8" style="margin-top: 1em;">
     <h3 style="color:#AD1E14; margin-bottom: 0.7em;">Passwort ändern</h3>
     <?php echo $errorMessageElemenet;?>
-    <form method="post">
-      <div class="form-group col-sm-6">
+    <div class="alert alert-danger col-md-8" role="alert" name="js-alert" id="js-alert" style="display: none;"></div>
+    <form name="change-password-form" id="change-password-form" method="post">
+      <div class="form-group col-md-8">
         <input type="text" class="form-control" name="username" id="username" placeholder="Benutzername">
       </div>
-      <div class="form-group col-sm-6">
+      <div class="form-group col-md-8">
         <input type="password" class="form-control" name="current-password" id="current-password" placeholder="aktuelles Passwort">
       </div>
-      <div class="form-group col-sm-6">
+      <div class="form-group col-md-8">
         <input type="password" class="form-control" name="new-password" id="new-password" placeholder="neues Passwort">
       </div>
-      <div class="form-group col-sm-6">
+      <div class="form-group col-md-8">
         <input type="password" class="form-control" name="new-password-re" id="new-password-re" placeholder="neues Passwort wiederholen">
       </div>
-      <div class="col-sm-6">
-        <button type="submit" name="change-password" class="btn btn-outline-primary">&Auml;ndern</button>
-        <button type="reset" name="reset-input" class="btn btn-outline-primary">L&ouml;schen</button>
+      <div class="col-md-8">
+        <button type="submit" name="change-password" class="btn btn-outline-primary">Absenden</button>
+        <button type="submit" name="change-password" class="btn btn-outline-primary" onclick="return checkInput()">Absenden mit JS</button>
+        <button type="reset" name="reset-input" class="btn btn-outline-primary" onclick="document.getElementById('username').focus(); return true;">L&ouml;schen</button>
       </div>
     </form>
   </div>

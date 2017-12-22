@@ -12,7 +12,14 @@
   cursor: pointer;
 }
 
-.btn-outline-primary:active, .btn-outline-primary:focus, .btn-outline-primary:active:focus {
+.btn-outline-primary:focus {
+  color: #fff;
+  background-color: #AD1E14;
+  border-color: #AD1E14;
+  box-shadow: none;
+}
+
+.btn-outline-primary:active, .btn-outline-primary:active:focus {
   color: #fff;
   background-color: #AD1E14;
   border-color: #AD1E14;
