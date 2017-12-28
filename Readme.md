@@ -1,7 +1,7 @@
-Password Selfservice
+Password Self-Service
 ==============
 
-A password selfservice based on PHP, MySQL and Bootstrap.
+A password self service based on PHP, MySQL and Bootstrap.
 
 Features
 --------------
