@@ -17,7 +17,8 @@ create table if not exists user (
   lastname VARCHAR(64) NOT NULL,
   username VARCHAR(64) NOT NULL,
   realm VARCHAR(64) NOT NULL,
-  role enum('app_user', 'app_admin'),
+  role enum('app_user', 'app_admin') NOT NULL,
+  permission enum('read', 'read_write') NOT NULL,
   password VARCHAR(64) NOT NULL,
   CONSTRAINT uc_user UNIQUE (user_id,username)
 );

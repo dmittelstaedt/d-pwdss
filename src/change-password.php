@@ -5,8 +5,7 @@ $dbServer = $dbConfig['server'];
 $dbName = $dbConfig['dbname'];
 $dbUsername = $dbConfig['username'];
 $dbPassword = $dbConfig['password'];
-
-$realm = "test";
+$realm = $dbConfig['realm'];
 
 $errorMessageFields = "Es sind nicht alle Felder ausgef&uuml;llt.";
 $errorMessagePasswords = "Passw&ouml;rter sind nicht identisch.";
@@ -45,7 +44,6 @@ function changePassword() {
           case '1':
             redirectToSuccess();
             break;
-
           default:
             $errorMessage = $errorMessageOther;
             break;
