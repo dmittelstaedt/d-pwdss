@@ -205,8 +205,7 @@ function logConsole( $data ) {
         <input type="password" class="form-control" name="new-password-re" id="new-password-re" placeholder="neues Passwort wiederholen">
       </div>
       <div class="col-md-8">
-        <button type="submit" name="change-password" class="btn btn-outline-primary">Absenden</button>
-        <button type="submit" name="change-password" class="btn btn-outline-primary" onclick="return checkInput()">Absenden mit JS</button>
+        <button type="submit" name="change-password" class="btn btn-outline-primary" onclick="return checkInput()">Absenden</button>
         <button type="reset" name="reset-input" class="btn btn-outline-primary" onclick="document.getElementById('username').focus(); return true;">L&ouml;schen</button>
       </div>
     </form>

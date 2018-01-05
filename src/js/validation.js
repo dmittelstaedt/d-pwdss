@@ -15,13 +15,13 @@ function checkInput() {
         console.log("Successful!");
         return true;
       } else {
-        document.getElementById("js-alert").innerHTML = "JS: Passwortrichtlinien sind nicht erf&uuml;llt.";
+        document.getElementById("js-alert").innerHTML = "Passwortrichtlinien sind nicht erf&uuml;llt.";
       }
     } else {
-      document.getElementById("js-alert").innerHTML = "JS: Passw&ouml;rter sind nicht identisch.";
+      document.getElementById("js-alert").innerHTML = "Passw&ouml;rter sind nicht identisch.";
     }
   } else {
-    document.getElementById("js-alert").innerHTML = "JS: Es sind nicht alle Felder ausgef&uuml;llt.";
+    document.getElementById("js-alert").innerHTML = "Es sind nicht alle Felder ausgef&uuml;llt.";
   }
   document.getElementById("js-alert").style.display = "block";
   document.getElementById("username").focus();
