@@ -20,5 +20,6 @@ create table if not exists user (
   role enum('app_user', 'app_admin') NOT NULL,
   permission enum('read', 'read_write') NOT NULL,
   password VARCHAR(64) NOT NULL,
+  last_change TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   CONSTRAINT uc_user UNIQUE (user_id,username)
 );

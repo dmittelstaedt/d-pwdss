@@ -9,9 +9,15 @@ function checkInput() {
     element.style.display = "none";
   }
 
-  if (checkRequiredFields()) {
-    if (comparePasswords()) {
-      if (checkPasswordRules()) {
+  var username, currentPassword, passwordNew, passwordNewRe;
+  username = document.forms["change-password-form"]["username"].value;
+  currentPassword = document.forms["change-password-form"]["current-password"].value;
+  passwordNew = document.forms["change-password-form"]["new-password"].value;
+  passwordNewRe = document.forms["change-password-form"]["new-password-re"].value;
+
+  if (checkRequiredFields(username, currentPassword, passwordNew, passwordNewRe)) {
+    if (comparePasswords(passwordNew, passwordNewRe)) {
+      if (checkPasswordRules(currentPassword, passwordNew)) {
         console.log("Successful!");
         return true;
       } else {
@@ -32,14 +38,8 @@ function checkInput() {
 * Checks if all fields are set.
 * @return {bool} true, if all fields are set, otherwise false
 */
-function checkRequiredFields() {
+function checkRequiredFields(username, currentPassword, passwordNew, passwordNewRe) {
 
-  var username, currentPassword, passwordNew, passwordNewRe, message;
-
-  username = document.forms["change-password-form"]["username"].value;
-  currentPassword = document.forms["change-password-form"]["current-password"].value;
-  passwordNew = document.forms["change-password-form"]["new-password"].value;
-  passwordNewRe = document.forms["change-password-form"]["new-password-re"].value;
   if (username == "" || currentPassword == "" || passwordNew == "" || passwordNewRe == "") {
     return false;
   } else {
@@ -47,12 +47,7 @@ function checkRequiredFields() {
   }
 }
 
-function comparePasswords() {
-
-  var passwordNew, passwordNewRe, message;
-
-  passwordNew = document.forms["change-password-form"]["new-password"].value;
-  passwordNewRe = document.forms["change-password-form"]["new-password-re"].value;
+function comparePasswords(passwordNew, passwordNewRe) {
 
   if (passwordNew == passwordNewRe) {
     return true;
@@ -61,14 +56,13 @@ function comparePasswords() {
   }
 }
 
-function checkPasswordRules() {
+function checkPasswordRules(currentPassword, passwordNew) {
 
-  var passwordRegex, passwordNew, message;
+  var passwordRegex;
 
   passwordRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[.,\-_!@#\$%\^&\*])(?=.{8,})");
-  passwordNew = document.forms["change-password-form"]["new-password"].value;
 
-  if (passwordNew.match(passwordRegex)) {
+  if (passwordNew.match(passwordRegex) && currentPassword != passwordNew) {
     return true;
   } else {
     return false;
