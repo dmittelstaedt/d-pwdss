@@ -116,7 +116,12 @@ function updatePassword($username, $currentPassword, $newPassword) {
       $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       $statement = $conn->prepare("update user set password='$newPasswordHashed' where username='$username' and password='$currentPasswordHashed'");
       $statement->execute();
-      return $statement->rowCount();
+      $rc = $statement->rowCount();
+      if ($rc == 1) {
+        $statementLastChange = $conn->prepare("update user set last_change_password=NOW() where username='$username'");
+        $statementLastChange->execute();
+      }
+      return $rc;
     } catch (Exception $e) {
       return -1;
     }
