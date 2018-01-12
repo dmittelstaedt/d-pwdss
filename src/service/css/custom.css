@@ -1,0 +1,27 @@
+.btn-outline-primary {
+    color: #AD1E14;
+    background-color: #fff;
+    border-color: #AD1E14;
+    border-radius: 16px;
+}
+
+.btn-outline-primary:hover {
+  color: #fff;
+  background-color: #AD1E14;
+  border-color: #AD1E14;
+  cursor: pointer;
+}
+
+.btn-outline-primary:focus {
+  color: #fff;
+  background-color: #AD1E14;
+  border-color: #AD1E14;
+  box-shadow: none;
+}
+
+.btn-outline-primary:active, .btn-outline-primary:active:focus {
+  color: #fff;
+  background-color: #AD1E14;
+  border-color: #AD1E14;
+  box-shadow: 0px 0px 2px 2px #ec695f;
+}
