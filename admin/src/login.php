@@ -17,7 +17,7 @@ $errorMessageElemenet = "";
 if (isset($_POST["login"])) {
   loginUser();
   $_SESSION['isLoggedIn'] = true;
-  header("Location: change-user.php");
+  header("Location: overview.php");
   die();
 }
 
