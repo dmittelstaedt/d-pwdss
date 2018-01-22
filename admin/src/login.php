@@ -1,51 +1,46 @@
 <?php
 session_start();
 
-$dbConfig = parse_ini_file("../conf/mysql.ini");
-$dbServer = $dbConfig['server'];
-$dbName = $dbConfig['dbname'];
-$dbUsername = $dbConfig['username'];
-$dbPassword = $dbConfig['password'];
-$realm = $dbConfig['realm'];
+include 'validation.php';
+include 'db-functions.php';
 
-$userRole = "app_admin";
-
-$errorMessage = "Benutzername oder Passwort ist falsch.";
-
-$errorMessageElemenet = "";
-
-if (isset($_POST["login"])) {
-  loginUser();
-  $_SESSION['isLoggedIn'] = true;
+if (isset($_SESSION['isLoggedIn'])) {
   header("Location: overview.php");
   die();
 }
 
-function loginUser() {
-  global $dbServer, $dbUsername, $dbPassword, $dbName, $realm, $userRole, $errorMessage, $errorMessageElemenet;
+if (isset($_POST["login"])) {
+  if (checkRequiredFields([$_POST["username"],$_POST["password"]])) {
+    $users = selectUserLogin($_POST["username"],$_POST["password"]);
+    logConsole($users);
+    logConsole(count($users));
+    logConsole($users['username']);
+    logConsole($users['role']);
 
-  $username = $_POST["username"];
-  $password = $_POST["password"];
 
-  $passwordHashed = md5("$username:$realm:$password");
-  logConsole($passwordHashed);
-  try {
-    $conn = new PDO("mysql:host=$dbServer;dbname=$dbName", $dbUsername, $dbPassword);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $statement = $conn->prepare("select user_id from user where username='$username' and password='$passwordHashed' and role='$userRole'");
-    $statement->execute();
-    $result = $statement->fetchAll();
-    logConsole($result);
-    if (count($result) == 1) {
-      $errorMessage = "Login erfolgreich!";
+    switch (count($users)) {
+      case 0:
+        $errorMessage = "Benutzername oder Passwort ist falsch.";
+        $isFalseLogin = true;
+        break;
+      case 1:
+        // $_SESSION['isLoggedIn'] = true;
+        // $_SESSION['loggedUser'] = $user['username'];
+        // $_SESSION['userRole'] = $user['role'];
+        logConsole($user['username']);
+        logConsole($user['role']);
+        // header("Location: overview.php");
+        // die();
+        break;
+      default:
+        $errorMessage = "Es ist ein unerwarteter Fehler aufgetreten. Wenden Sie sich bitte an Ihren Administrator.";
+        $isFalseLogin = true;
+        break;
     }
-    // return $rc;
-  } catch (Exception $e) {
-    logConsole("Exception: " . $e->getMessage());
-    // return -1;
+  } else {
+    $isFalseLogin = true;
+    $errorMessage = "Es sind nicht alle Felder ausgef&uuml;llt.";
   }
-
-  $errorMessageElemenet = "<div class=\"alert alert-danger col-md-4 offset-md-4\" name=\"php-alert\" id=\"php-alert\" role=\"alert\">$errorMessage</div>";
 }
 
 /**
@@ -87,7 +82,17 @@ function logConsole( $data ) {
   <!-- <div class="container col-md-8" style="margin-top: 1em; border: 1px solid black;"> -->
   <div class="container col-md-8 text-center" style="margin-top: 1em;">
     <h3 style="color:#AD1E14; margin-bottom: 0.7em;">Passwort Self-Service Admin</h3>
-    <?php echo $errorMessageElemenet;?>
+    <?php if (isset($isFalseLogin)) {
+    ?>
+    <div class="alert alert-danger col-md-4 offset-md-4 alert-dismissible fade show" role="alert" name="php-alert" id="php-alert" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <?php echo $errorMessage ?>
+    </div>
+    <?php
+    }
+    ?>
     <form name="login-form" id="login-form" method="post">
       <div class="form-group col-md-4 offset-md-4">
         <input type="text" class="form-control" name="username" id="username" placeholder="Benutzername">

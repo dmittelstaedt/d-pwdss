@@ -61,7 +61,7 @@ if (isset($_SESSION['isLoggedIn'])) {
             <button class="btn btn-outline-secondary dropdown-toggle" style="border: 0px solid transparent;" type="button" id="dropdown-user-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Benutzer</button>
             <div class="dropdown-menu" aria-labelledby="dropdown-user-button">
               <a class="dropdown-item" href="add-user.php">Benutzer hinzuf&uuml;gen</a>
-              <a class="dropdown-item" href="edit-user.php">Benutzer bearbeiten</a>
+              <a class="dropdown-item" href="show-user.php">Benutzer anzeigen</a>
           </div>
         </li>
         <li class="nav-item">
@@ -90,7 +90,7 @@ if (isset($_SESSION['isLoggedIn'])) {
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item text-center d-inline-block"><a href="add-user.php">Benutzer hinzuf&uuml;gen</a></li>
-          <li class="list-group-item text-center d-inline-block"><a href="edit-user.php">Benutzer bearbeiten</a></li>
+          <li class="list-group-item text-center d-inline-block"><a href="show-user.php">Benutzer anzeigen</a></li>
         </ul>
       </div>
       <div class="card" style="margin-bottom: 0.7em;">
