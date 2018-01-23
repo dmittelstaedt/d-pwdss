@@ -19,7 +19,7 @@ function selectUserLogin($username,$password) {
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $statement = $conn->prepare("select username, role from user where username='$username' and password='$passwordHashed' limit 1");
     $statement->execute();
-    $result = $statement->fetch();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
     return $result;
   } catch (Exception $e) {
     // return -1;

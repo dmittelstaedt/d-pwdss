@@ -15,6 +15,11 @@ if (isset($_SESSION['isLoggedIn']) && isset($_POST["logout"])) {
   die();
 }
 
+if (isset($_SESSION['userRole']) && strcmp($_SESSION['userRole'],"app_admin") != 0) {
+  header("Location: overview.php");
+  die();
+}
+
 $errorMessage = "";
 $errorMessageFields = "Es sind nicht alle Felder ausgef&uuml;llt.";
 $errorMessageChanges = "Es wurden keine &Auml;nderungen vorgenommen.";

@@ -12,11 +12,6 @@ if (isset($_SESSION['isLoggedIn'])) {
 if (isset($_POST["login"])) {
   if (checkRequiredFields([$_POST["username"],$_POST["password"]])) {
     $users = selectUserLogin($_POST["username"],$_POST["password"]);
-    logConsole($users);
-    logConsole(count($users));
-    logConsole($users['username']);
-    logConsole($users['role']);
-
 
     switch (count($users)) {
       case 0:
@@ -24,13 +19,13 @@ if (isset($_POST["login"])) {
         $isFalseLogin = true;
         break;
       case 1:
-        // $_SESSION['isLoggedIn'] = true;
-        // $_SESSION['loggedUser'] = $user['username'];
-        // $_SESSION['userRole'] = $user['role'];
-        logConsole($user['username']);
-        logConsole($user['role']);
-        // header("Location: overview.php");
-        // die();
+        $_SESSION['isLoggedIn'] = true;
+        foreach ($users as $user) {
+          $_SESSION['loggedUser'] = $user['username'];
+          $_SESSION['userRole'] = $user['role'];
+        }
+        header("Location: overview.php");
+        die();
         break;
       default:
         $errorMessage = "Es ist ein unerwarteter Fehler aufgetreten. Wenden Sie sich bitte an Ihren Administrator.";
@@ -82,6 +77,12 @@ function logConsole( $data ) {
   <!-- <div class="container col-md-8" style="margin-top: 1em; border: 1px solid black;"> -->
   <div class="container col-md-8 text-center" style="margin-top: 1em;">
     <h3 style="color:#AD1E14; margin-bottom: 0.7em;">Passwort Self-Service Admin</h3>
+    <div class="alert alert-danger col-md-4 offset-md-4 alert-dismissible fade show" role="alert" name="js-alert" id="js-alert" style="display: none;">
+      <button type="button" class="close" data-hide="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <a name="js-alert-message" id="js-alert-message"></a>
+    </div>
     <?php if (isset($isFalseLogin)) {
     ?>
     <div class="alert alert-danger col-md-4 offset-md-4 alert-dismissible fade show" role="alert" name="php-alert" id="php-alert" role="alert">
@@ -101,7 +102,7 @@ function logConsole( $data ) {
         <input type="password" class="form-control" name="password" id="password" placeholder="Passwort">
       </div>
       <div class="col-md-4 offset-md-4">
-        <button type="submit" name="login" class="btn btn-outline-primary">Anmelden</button>
+        <button type="submit" name="login" class="btn btn-outline-primary" onclick="return checkInputLogin()">Anmelden</button>
       </div>
     </form>
     <p class="small" style="margin-top: 2.5em;">Version 0.0.1</p>
@@ -109,5 +110,6 @@ function logConsole( $data ) {
   <script src="js/jquery.min.js"></script>
   <script src="js/tether.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
+  <script src="js/validation.js"></script>
 </body>
 </html>

@@ -14,6 +14,11 @@ if (isset($_SESSION['isLoggedIn']) && isset($_POST["logout"])) {
   die();
 }
 
+if (isset($_SESSION['userRole']) && strcmp($_SESSION['userRole'],"app_admin") != 0) {
+  header("Location: overview.php");
+  die();
+}
+
 if (isset($_POST["show-user"])) {
   $_SESSION['selectedUser'] = $_POST['user-select'];
   header("Location: edit-user.php");

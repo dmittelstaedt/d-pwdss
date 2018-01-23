@@ -36,7 +36,7 @@ function logConsole( $data ) {
 ?>
 <?php
 if (isset($_SESSION['isLoggedIn'])) {
-  $_SESSION['lastActivity'] = time();
+  // $_SESSION['lastActivity'] = time();
 ?>
 <!DOCTYPE html>
 <html>
@@ -56,6 +56,8 @@ if (isset($_SESSION['isLoggedIn'])) {
     </a>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
+        <?php if (isset($_SESSION['userRole']) && strcmp($_SESSION['userRole'],"app_admin") == 0) {
+        ?>
         <li class="nav-item">
           <div class="dropdown">
             <button class="btn btn-outline-secondary dropdown-toggle" style="border: 0px solid transparent;" type="button" id="dropdown-user-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Benutzer</button>
@@ -64,6 +66,9 @@ if (isset($_SESSION['isLoggedIn'])) {
               <a class="dropdown-item" href="show-user.php">Benutzer anzeigen</a>
           </div>
         </li>
+        <?php
+        }
+        ?>
         <li class="nav-item">
           <div class="dropdown">
             <button class="btn btn-outline-secondary dropdown-toggle" style="border: 0px solid transparent;" type="button" id="dropdown-profile-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profil</button>
@@ -84,6 +89,8 @@ if (isset($_SESSION['isLoggedIn'])) {
   <div class="container col-md-8 text-center" style="margin-top: 1em;">
     <h3 style="color:#AD1E14; margin-bottom: 0.7em;">&Uuml;bersicht</h3>
     <div class="col-md-6 offset-md-3">
+    <?php if (isset($_SESSION['userRole']) && strcmp($_SESSION['userRole'],"app_admin") == 0) {
+    ?>
     <div class="card" style="margin-bottom: 0.7em;">
         <div class="card-header">
           Benutzer
@@ -93,6 +100,9 @@ if (isset($_SESSION['isLoggedIn'])) {
           <li class="list-group-item text-center d-inline-block"><a href="show-user.php">Benutzer anzeigen</a></li>
         </ul>
       </div>
+      <?php
+      }
+      ?>
       <div class="card" style="margin-bottom: 0.7em;">
           <div class="card-header">
             Profil
