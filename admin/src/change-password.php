@@ -53,18 +53,6 @@ if (isset($_POST['change-password'])) {
   }
 }
 
-/**
-* Writes output to console of the browser. Can be used for logging or debugging
-* purpose. Turn it off in production mode.
-*
-* @param string data to write to console
-*/
-function logConsole( $data ) {
-  echo '<script>';
-  echo 'console.log('. json_encode( $data ) .')';
-  echo '</script>';
-}
-
 ?>
 <?php
 if (isset($_SESSION['isLoggedIn'])) {
@@ -165,6 +153,7 @@ if (isset($_SESSION['isLoggedIn'])) {
   <script src="js/jquery.min.js"></script>
   <script src="js/tether.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
+  <script src="js/custom-jquery.js"></script>
   <script src="js/validation.js"></script>
 </body>
 </html>

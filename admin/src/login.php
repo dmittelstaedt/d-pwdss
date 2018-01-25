@@ -38,18 +38,6 @@ if (isset($_POST["login"])) {
   }
 }
 
-/**
-* Writes output to console of the browser. Can be used for logging or debugging
-* purpose. Turn it off in production mode.
-*
-* @param string data to write to console
-*/
-function logConsole( $data ) {
-  echo '<script>';
-  echo 'console.log('. json_encode( $data ) .')';
-  echo '</script>';
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -76,7 +64,7 @@ function logConsole( $data ) {
 
   <!-- <div class="container col-md-8" style="margin-top: 1em; border: 1px solid black;"> -->
   <div class="container col-md-8 text-center" style="margin-top: 1em;">
-    <h3 style="color:#AD1E14; margin-bottom: 0.7em;">Passwort Self-Service Admin</h3>
+    <h3 style="color:#AD1E14; margin-bottom: 0.7em;">Passwort Self-Service</h3>
     <div class="alert alert-danger col-md-4 offset-md-4 alert-dismissible fade show" role="alert" name="js-alert" id="js-alert" style="display: none;">
       <button type="button" class="close" data-hide="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -110,6 +98,7 @@ function logConsole( $data ) {
   <script src="js/jquery.min.js"></script>
   <script src="js/tether.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
+  <script src="js/custom-jquery.js"></script>
   <script src="js/validation.js"></script>
 </body>
 </html>

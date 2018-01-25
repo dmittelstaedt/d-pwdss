@@ -28,11 +28,6 @@ $errorMessagePasswordRule = "Passwortrichtlinien sind nicht erf&uuml;llt.";
 $errorMessageOther = "Es ist ein unerwarteter Fehler aufgetreten. Wenden Sie sich bitte an Ihren Administrator.";
 
 if (isset($_POST["edit-user"])) {
-  editUser();
-}
-
-function editUser() {
-  global $errorMessage, $errorMessageFields, $errorMessageChanges, $errorMessagePasswords, $errorMessagePasswordRule, $errorMessageUserExists, $errorMessageOther, $errorMessageElemenet, $firstNameSession, $lastNameSession, $usernameSession, $permissionSession;
 
   $isChecked = false;
 
@@ -49,24 +44,22 @@ function editUser() {
   $permissionSelect = $_POST["permission"];
   switch ($permissionSelect) {
     case 'permission-read':
-      $permission = "read";
-      break;
+    $permission = "read";
+    break;
     case 'permission-read-write':
-      $permission = "read_write";
-      break;
+    $permission = "read_write";
+    break;
     default:
-      break;
+    break;
   }
   $newPassword = $_POST["new-password"];
   $newPasswordRe = $_POST["new-password-re"];
 
   if (empty($newPassword) && empty($newPasswordRe)) {
-    logConsole("Change User without Password");
     if (checkRequiredFields([$firstName, $lastName])) {
       if (strcmp($firstName,$firstNameSession) != 0 || strcmp($lastName,$lastNameSession) != 0 || strcmp($permission,$permissionSession) != 0) {
         $rc = updateUserWithoutPassword($firstName, $lastName, $usernameSession, $permission);
         $isChecked = true;
-        logConsole("Benutzer wird geaendert");
       } else {
         $errorMessage = $errorMessageChanges;
       }
@@ -74,12 +67,10 @@ function editUser() {
       $errorMessage = $errorMessageFields;
     }
   } else {
-    logConsole("Change User with Password");
     if (checkRequiredFields([$firstName,$lastName,$newPassword,$newPasswordRe])) {
       if (comparePasswords($newPassword,$newPasswordRe)) {
         if (checkPasswordRulesSimple($newPassword)) {
           $isChecked = true;
-          logConsole("Passwort wird geaendert");
           $rc = updateUserWithPassword($firstName, $lastName, $usernameSession, $permission, $newPassword);
         } else {
           $errorMessage = $errorMessagePasswordRule;
@@ -99,24 +90,11 @@ function editUser() {
 }
 
 if (!isset($_POST["edit-user"]) && isset($_SESSION['selectedUser'])) {
-  logConsole("First Call: " . $_SESSION['selectedUser']);
   $user = selectUser($_SESSION['selectedUser']);
   $firstNameSession = $user['firstname'];
   $lastNameSession = $user['lastname'];
   $usernameSession = $user['username'];
   $permissionSession = $user['permission'];
-}
-
-/**
-* Writes output to console of the browser. Can be used for logging or debugging
-* purpose. Turn it off in production mode.
-*
-* @param string data to write to console
-*/
-function logConsole( $data ) {
-  echo '<script>';
-  echo 'console.log('. json_encode( $data ) .')';
-  echo '</script>';
 }
 
 ?>

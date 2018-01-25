@@ -12,27 +12,6 @@ if (isset($_SESSION['isLoggedIn']) && isset($_POST["logout"])) {
   die();
 }
 
-// if (isset($_SESSION['isLoggedIn']) && isset($_SESSION['lastActivity']) && (time() - $_SESSION['lastActivity'] > 5)) {
-//   $myTime = time();
-//   logConsole($_SESSION['lastActivity']);
-//   logConsole($myTime);
-//   session_destroy();
-//   header("Location: logout.html");
-//   die();
-// }
-
-/**
-* Writes output to console of the browser. Can be used for logging or debugging
-* purpose. Turn it off in production mode.
-*
-* @param string data to write to console
-*/
-function logConsole( $data ) {
-  echo '<script>';
-  echo 'console.log('. json_encode( $data ) .')';
-  echo '</script>';
-}
-
 ?>
 <?php
 if (isset($_SESSION['isLoggedIn'])) {

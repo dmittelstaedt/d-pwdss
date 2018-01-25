@@ -28,7 +28,6 @@ $errorMessageUserExists = "Der Benutzer existiert bereits.";
 $errorMessageOther = "Es ist ein unerwarteter Fehler aufgetreten. Wenden Sie sich bitte an Ihren Administrator.";
 
 if (isset($_POST["add-user"])) {
-  // logConsole("Button was pressed");
   addUser();
 }
 
@@ -55,9 +54,7 @@ function addUser() {
           default:
             break;
         }
-        // logConsole ($permission);
         $rc = insertUser($firstName, $lastName, $username, $permission, $newPassword);
-        logConsole($rc);
       } else {
         $errorMessage = $errorMessagePasswordRule;
       }
@@ -67,18 +64,6 @@ function addUser() {
   } else {
     $errorMessage = $errorMessageFields;
   }
-}
-
-/**
-* Writes output to console of the browser. Can be used for logging or debugging
-* purpose. Turn it off in production mode.
-*
-* @param string data to write to console
-*/
-function logConsole( $data ) {
-  echo '<script>';
-  echo 'console.log('. json_encode( $data ) .')';
-  echo '</script>';
 }
 
 ?>

@@ -1,9 +1,3 @@
-$(function(){
-  $("[data-hide]").on("click", function(){
-    $("." + $(this).attr("data-hide")).hide();
-  });
-});
-
 /**
 * Checks input of the fields of the form
 * @return {bool} true, if all tests were successful, otherwise false

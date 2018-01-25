@@ -22,8 +22,8 @@ function selectUserLogin($username,$password) {
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
     return $result;
   } catch (Exception $e) {
-    // return -1;
-    return $e->getMessage();
+    return -1;
+    // return $e->getMessage();
   }
 }
 
@@ -37,7 +37,8 @@ function selectUsername() {
     $result = $statement->fetchAll();
     return $result;
   } catch (Exception $e) {
-    return $e->getMessage();
+    return -1;
+    // return $e->getMessage();
   }
 }
 
@@ -51,7 +52,8 @@ function selectUser($username) {
     $result = $statement->fetch();
     return $result;
   } catch (Exception $e) {
-    return $e->getMessage();
+    return -1;
+    // return $e->getMessage();
   }
 }
 
@@ -80,7 +82,8 @@ function updateUserWithoutPassword($firstName, $lastName, $username, $permission
     $rc = $statement->rowCount();
     return $rc;
   } catch (Exception $e) {
-    return $e->getMessage();
+    return -1;
+    // return $e->getMessage();
   }
 }
 
@@ -95,7 +98,8 @@ function updateUserWithPassword($firstName, $lastName, $username, $permission, $
     $rc = $statement->rowCount();
     return $rc;
   } catch (Exception $e) {
-    return $e->getMessage();
+    return -1;
+    // return $e->getMessage();
   }
 }
 

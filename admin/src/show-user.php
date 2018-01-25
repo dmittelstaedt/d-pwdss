@@ -25,18 +25,6 @@ if (isset($_POST["show-user"])) {
   die();
 }
 
-/**
-* Writes output to console of the browser. Can be used for logging or debugging
-* purpose. Turn it off in production mode.
-*
-* @param string data to write to console
-*/
-function logConsole( $data ) {
-  echo '<script>';
-  echo 'console.log('. json_encode( $data ) .')';
-  echo '</script>';
-}
-
 ?>
 <?php
 if (isset($_SESSION['isLoggedIn'])) {
