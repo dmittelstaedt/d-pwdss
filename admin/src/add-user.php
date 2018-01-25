@@ -27,12 +27,41 @@ $errorMessagePasswordRule = "Passwortrichtlinien sind nicht erf&uuml;llt.";
 $errorMessageUserExists = "Der Benutzer existiert bereits.";
 $errorMessageOther = "Es ist ein unerwarteter Fehler aufgetreten. Wenden Sie sich bitte an Ihren Administrator.";
 
-if (isset($_POST["add-user"])) {
-  addUser();
-}
+// if (isset($_POST["add-user"])) {
+//
+//   $firstName = $_POST["first-name"];
+//   $lastName = $_POST["last-name"];
+//   $username = $_POST["username"];
+//   $newPassword = $_POST["new-password"];
+//   $newPasswordRe = $_POST["new-password-re"];
+//
+//   if (isset($_POST['permission']) && checkRequiredFields([$lastName, $username, $newPassword, $newPasswordRe])) {
+//     if (comparePasswords($newPassword,$newPasswordRe)) {
+//       if (checkPasswordRulesSimple($newPassword)) {
+//         $permissionValue = $_POST["permission"];
+//         switch ($permissionValue) {
+//           case 'permission-read':
+//             $permission = "read";
+//             break;
+//           case 'permission-read-write':
+//             $permission = "read_write";
+//             break;
+//           default:
+//             break;
+//         }
+//         $rc = insertUser($firstName, $lastName, $username, $permission, $newPassword);
+//       } else {
+//         $errorMessage = $errorMessagePasswordRule;
+//       }
+//     } else {
+//       $errorMessage = $errorMessagePasswords;
+//     }
+//   } else {
+//     $errorMessage = $errorMessageFields;
+//   }
+// }
 
-function addUser() {
-  global $errorMessage, $errorMessageFields, $errorMessagePasswords, $errorMessagePasswordRule, $errorMessageUserExists, $errorMessageOther, $errorMessageElemenet;
+if (isset($_POST["add-user"])) {
 
   $firstName = $_POST["first-name"];
   $lastName = $_POST["last-name"];
@@ -42,7 +71,7 @@ function addUser() {
 
   if (isset($_POST['permission']) && checkRequiredFields([$firstName, $lastName, $username, $newPassword, $newPasswordRe])) {
     if (comparePasswords($newPassword,$newPasswordRe)) {
-      if (checkPasswordRulesSimple($newPassword)) {
+      // if (checkPasswordRulesSimple($newPassword)) {
         $permissionValue = $_POST["permission"];
         switch ($permissionValue) {
           case 'permission-read':
@@ -55,9 +84,9 @@ function addUser() {
             break;
         }
         $rc = insertUser($firstName, $lastName, $username, $permission, $newPassword);
-      } else {
-        $errorMessage = $errorMessagePasswordRule;
-      }
+      // } else {
+      //   $errorMessage = $errorMessagePasswordRule;
+      // }
     } else {
       $errorMessage = $errorMessagePasswords;
     }
