@@ -17,7 +17,7 @@ function selectUserLogin($username,$password) {
   try {
     $conn = new PDO("mysql:host=$dbServer;dbname=$dbName", $dbUsername, $dbPassword);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $statement = $conn->prepare("select username, role from user where username='$username' and password='$passwordHashed' limit 1");
+    $statement = $conn->prepare("select username, role from users where username='$username' and password='$passwordHashed' limit 1");
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
     return $result;
@@ -32,7 +32,7 @@ function selectUsername() {
   try {
     $conn = new PDO("mysql:host=$dbServer;dbname=$dbName", $dbUsername, $dbPassword);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $statement = $conn->prepare("select username from user where role = '$role' order by username");
+    $statement = $conn->prepare("select username from users where role = '$role' order by username");
     $statement->execute();
     $result = $statement->fetchAll();
     return $result;
@@ -47,7 +47,7 @@ function selectUser($username) {
   try {
     $conn = new PDO("mysql:host=$dbServer;dbname=$dbName", $dbUsername, $dbPassword);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $statement = $conn->prepare("select firstname, lastname, username, permission from user where username='$username' and role='$role' limit 1");
+    $statement = $conn->prepare("select firstname, lastname, username, permission from users where username='$username' and role='$role' limit 1");
     $statement->execute();
     $result = $statement->fetch();
     return $result;
@@ -63,7 +63,7 @@ function insertUser($firstName, $lastName, $username, $permission, $password) {
   try {
     $conn = new PDO("mysql:host=$dbServer;dbname=$dbName", $dbUsername, $dbPassword);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $statement = $conn->prepare("insert into user (firstname, lastname, username, realm, role, permission, password, last_change_password) VALUES ('$firstName', '$lastName', '$username', '$realm', '$role', '$permission', '$passwordHashed', NOW())");
+    $statement = $conn->prepare("insert into users (firstname, lastname, username, realm, role, permission, password, last_change_password) VALUES ('$firstName', '$lastName', '$username', '$realm', '$role', '$permission', '$passwordHashed', NOW())");
     $statement->execute();
     $rc = $statement->rowCount();
     return $rc;
@@ -77,7 +77,7 @@ function updateUserWithoutPassword($firstName, $lastName, $username, $permission
   try {
     $conn = new PDO("mysql:host=$dbServer;dbname=$dbName", $dbUsername, $dbPassword);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $statement = $conn->prepare("update user set firstname='$firstName', lastname='$lastName', permission='$permission' where username='$username'");
+    $statement = $conn->prepare("update users set firstname='$firstName', lastname='$lastName', permission='$permission' where username='$username'");
     $statement->execute();
     $rc = $statement->rowCount();
     return $rc;
@@ -93,7 +93,7 @@ function updateUserWithPassword($firstName, $lastName, $username, $permission, $
   try {
     $conn = new PDO("mysql:host=$dbServer;dbname=$dbName", $dbUsername, $dbPassword);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $statement = $conn->prepare("update user set firstname='$firstName', lastname='$lastName', permission='$permission', password='$passwordHashed', last_change_password=NOW() where username='$username'");
+    $statement = $conn->prepare("update users set firstname='$firstName', lastname='$lastName', permission='$permission', password='$passwordHashed', last_change_password=NOW() where username='$username'");
     $statement->execute();
     $rc = $statement->rowCount();
     return $rc;
@@ -114,11 +114,11 @@ function updatePassword($username, $currentPassword, $newPassword) {
   try {
     $conn = new PDO("mysql:host=$dbServer;dbname=$dbName", $dbUsername, $dbPassword);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $statement = $conn->prepare("update user set password='$newPasswordHashed' where username='$username' and password='$currentPasswordHashed'");
+    $statement = $conn->prepare("update users set password='$newPasswordHashed' where username='$username' and password='$currentPasswordHashed'");
     $statement->execute();
     $rc = $statement->rowCount();
     if ($rc == 1) {
-      $statementLastChange = $conn->prepare("update user set last_change_password=NOW() where username='$username'");
+      $statementLastChange = $conn->prepare("update users set last_change_password=NOW() where username='$username'");
       $statementLastChange->execute();
     }
     return $rc;
