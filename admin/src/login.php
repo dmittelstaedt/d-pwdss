@@ -21,7 +21,7 @@ if (isset($_POST["login"])) {
       case 1:
         $_SESSION['isLoggedIn'] = true;
         foreach ($users as $user) {
-          $_SESSION['loggedUser'] = $user['username'];
+          $_SESSION['loggedUser'] = $user['name'];
           $_SESSION['userRole'] = $user['role'];
         }
         header("Location: overview.php");
