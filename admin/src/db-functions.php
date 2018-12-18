@@ -17,7 +17,7 @@ function selectUserLogin($username,$password) {
   try {
     $conn = new PDO("mysql:host=$dbServer;dbname=$dbName", $dbUsername, $dbPassword);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $statement = $conn->prepare("select name, role from users where username='$username' and password='$passwordHashed' limit 1");
+    $statement = $conn->prepare("select name, role from users where name='$username' and password='$passwordHashed' limit 1");
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
     return $result;
