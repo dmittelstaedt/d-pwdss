@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 - User can be deleted.
 - Support a install script to install the application.
+- Possibilty to register new user --> send mail to admin and activate --> how can the complex permissions been handled?
 ### Changed
 - Show success dialog, if a user is added or edited.
 ### Deprecated
