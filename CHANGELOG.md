@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 - Possibilty to register new user --> send mail to admin and activate --> how can the complex permissions been handled?
 ### Changed
 - Show success dialog, if a user is added or edited.
+- Add compatibilty for IE 11 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 ### Deprecated
 ### Removed
 - Remove service application and rename admin
